@@ -2,6 +2,12 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { PrivyProvider } from "@privy-io/react-auth";
+import {toSolanaWalletConnectors} from '@privy-io/react-auth/solana';
+
+const solanaConnectors = toSolanaWalletConnectors({
+  // By default, shouldAutoConnect is enabled
+  shouldAutoConnect: true,
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -46,8 +52,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           embeddedWallets: {
             createOnLogin: "all-users",
           },
+          appearance: {
+            walletChainType: 'solana-only',
+          },
+          externalWallets: {
+            solana: {
+              connectors: solanaConnectors,
+            },
+          },
         }}
-      >
+      > 
         <Component {...pageProps} />
       </PrivyProvider>
     </>
